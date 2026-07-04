@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bhook Stop — Shorkot</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=JetBrains+Mono:wght@400;500;700&family=Work+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --charcoal-950:#15110d;
+    --charcoal-900:#211a14;
+    --charcoal-850:#2a2119;
+    --charcoal-800:#332720;
+    --charcoal-line:#443528;
+    --orange-500:#e8721f;
+    --orange-400:#f28c3a;
+    --gold-300:#f4b04a;
+    --cream-100:#f6efe2;
+    --cream-200:#efe4d0;
+    --stone-400:#a3907a;
+    --stone-500:#7c6b58;
+    --chili-600:#b3371b;
+    --green-wa:#3fae53;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--charcoal-950);
+    color:var(--cream-100);
+    font-family:'Work Sans',sans-serif;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{
+    font-family:'Anton',sans-serif;
+    font-weight:400;
+    letter-spacing:0.01em;
+    text-transform:uppercase;
+  }
+  .mono{font-family:'JetBrains Mono',monospace;}
+  a{color:inherit;text-decoration:none;}
+  img{display:block;max-width:100%;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 24px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(21,17,13,0.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--charcoal-line);
+  }
+  .nav{
+    display:flex;align-items:center;justify-content:space-between;
+    padding:14px 24px;max-width:1180px;margin:0 auto;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    width:38px;height:38px;border-radius:9px;
+    background:linear-gradient(155deg,var(--orange-500),var(--chili-600));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Anton',sans-serif;color:var(--cream-100);font-size:20px;
+    box-shadow:0 3px 10px rgba(232,114,31,0.35);
+  }
+  .brand-name{font-family:'Anton',sans-serif;font-size:19px;letter-spacing:0.02em;text-transform:uppercase;}
+  .brand-name span{color:var(--orange-400);}
+  nav.links{display:flex;gap:28px;align-items:center;}
+  nav.links a{
+    font-size:14px;font-weight:600;color:var(--cream-200);
+    letter-spacing:0.03em;text-transform:uppercase;
+    position:relative;padding:4px 0;
+  }
+  nav.links a:hover{color:var(--orange-400);}
+  .nav-cta{
+    background:var(--green-wa);color:#0d1f10;
+    padding:10px 18px;border-radius:999px;font-weight:700;
+    font-size:13.5px;display:flex;align-items:center;gap:7px;
+    box-shadow:0 4px 14px rgba(63,174,83,0.35);
+  }
+  .nav-cta svg{width:16px;height:16px;flex-shrink:0;}
+  .nav-toggle{display:none;background:none;border:none;color:var(--cream-100);font-size:26px;cursor:pointer;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    padding:64px 0 76px;
+    background:
+      radial-gradient(ellipse 900px 500px at 82% -10%, rgba(232,114,31,0.16), transparent 60%),
+      var(--charcoal-950);
+    border-bottom:1px solid var(--charcoal-line);
+    overflow:hidden;
+  }
+  .hero-grid{
+    display:grid;grid-template-columns:1.05fr 0.95fr;gap:48px;align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;
+    color:var(--gold-300);letter-spacing:0.14em;text-transform:uppercase;
+    border:1px solid var(--charcoal-line);padding:6px 12px;border-radius:999px;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--orange-500);
+    box-shadow:0 0 0 4px rgba(232,114,31,0.18);}
+  .hero h1{
+    font-size:clamp(46px,8vw,88px);
+    line-height:0.92;
+    color:var(--cream-100);
+  }
+  .hero h1 .stop{
+    color:var(--charcoal-950);
+    background:var(--orange-500);
+    padding:0 14px 4px;
+    display:inline-block;
+    box-decoration-break:clone;
+    -webkit-box-decoration-break:clone;
+    transform:rotate(-1.2deg);
+  }
+  .hero-sub{
+    margin-top:22px;font-size:17px;line-height:1.6;color:var(--cream-200);
+    max-width:460px;
+  }
+  .hero-sub b{color:var(--gold-300);font-weight:700;}
+  .hero-ctas{display:flex;gap:14px;margin-top:34px;flex-wrap:wrap;align-items:center;}
+  .btn-wa{
+    background:linear-gradient(180deg,#4ec463,var(--green-wa));
+    color:#0c1f10;font-weight:800;font-size:16.5px;
+    padding:18px 30px;border-radius:14px;
+    display:inline-flex;align-items:center;gap:10px;
+    box-shadow:0 10px 30px rgba(63,174,83,0.4), inset 0 1px 0 rgba(255,255,255,0.25);
+    animation:pulseGlow 2.6s ease-in-out infinite;
+    border:none;cursor:pointer;
+  }
+  .btn-wa svg{width:22px;height:22px;}
+  @keyframes pulseGlow{
+    0%,100%{box-shadow:0 10px 30px rgba(63,174,83,0.4), inset 0 1px 0 rgba(255,255,255,0.25);}
+    50%{box-shadow:0 10px 40px rgba(63,174,83,0.65), inset 0 1px 0 rgba(255,255,255,0.25);}
+  }
+  .btn-ghost{
+    padding:18px 26px;border-radius:14px;border:1px solid var(--charcoal-line);
+    font-weight:700;font-size:15px;color:var(--cream-200);
+  }
+  .hero-meta{
+    display:flex;gap:22px;margin-top:36px;flex-wrap:wrap;
+  }
+  .hero-meta div{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--stone-400);}
+  .hero-meta strong{display:block;color:var(--cream-100);font-family:'Anton',sans-serif;font-size:22px;text-transform:none;}
+
+  .hero-visual{position:relative;}
+  .hero-photo{
+    border-radius:22px;overflow:hidden;
+    box-shadow:0 30px 60px rgba(0,0,0,0.55);
+    border:1px solid var(--charcoal-line);
+    position:relative;
+    aspect-ratio:4/5;
+  }
+  .hero-photo img{width:100%;height:100%;object-fit:cover;}
+  .hero-photo::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(21,17,13,0) 45%, rgba(21,17,13,0.85) 100%);
+  }
+  .steam{
+    position:absolute;width:6px;border-radius:6px;
+    background:linear-gradient(180deg, rgba(246,239,226,0.5), rgba(246,239,226,0));
+    filter:blur(3px);
+    animation:rise 4.5s ease-in infinite;
+    opacity:0;
+  }
+  @keyframes rise{
+    0%{opacity:0;height:0;transform:translateY(0) translateX(0);}
+    15%{opacity:0.55;}
+    100%{opacity:0;height:120px;transform:translateY(-140px) translateX(14px);}
+  }
+  .price-tag{
+    position:absolute;bottom:18px;left:18px;z-index:2;
+    background:var(--charcoal-950);border:1px solid var(--charcoal-line);
+    border-radius:14px;padding:12px 16px;
+    display:flex;align-items:center;gap:10px;
+    box-shadow:0 10px 24px rgba(0,0,0,0.4);
+  }
+  .price-tag .dot{width:9px;height:9px;border-radius:50%;background:var(--orange-500);}
+  .price-tag span{font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--cream-200);}
+
+  /* ---------- TICKER ---------- */
+  .ticker-wrap{
+    background:var(--orange-500);
+    overflow:hidden;white-space:nowrap;
+    border-top:1px solid var(--charcoal-line);
+    border-bottom:1px solid var(--charcoal-line);
+  }
+  .ticker{
+    display:inline-flex;gap:40px;padding:11px 0;
+    animation:scroll 22s linear infinite;
+  }
+  .ticker span{
+    font-family:'JetBrains Mono',monospace;font-weight:700;font-size:13px;
+    color:var(--charcoal-950);text-transform:uppercase;letter-spacing:0.08em;
+    display:inline-flex;align-items:center;gap:10px;
+  }
+  .ticker span::after{content:"//";opacity:0.5;}
+  @keyframes scroll{0%{transform:translateX(0);}100%{transform:translateX(-50%);}}
+
+  /* ---------- SECTION HEADS ---------- */
+  section{padding:88px 0;}
+  .sec-head{max-width:640px;margin-bottom:48px;}
+  .sec-eyebrow{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--orange-400);
+    letter-spacing:0.14em;text-transform:uppercase;display:block;margin-bottom:12px;
+  }
+  .sec-head h2{font-size:clamp(32px,4.5vw,48px);color:var(--cream-100);line-height:1.05;}
+  .sec-head p{margin-top:14px;color:var(--stone-400);font-size:16px;line-height:1.6;}
+
+  /* ---------- MENU ---------- */
+  .menu{background:var(--charcoal-900);border-top:1px solid var(--charcoal-line);border-bottom:1px solid var(--charcoal-line);}
+  .tabs{display:flex;gap:10px;margin-bottom:36px;flex-wrap:wrap;}
+  .tab-btn{
+    font-family:'Anton',sans-serif;font-size:15px;letter-spacing:0.04em;text-transform:uppercase;
+    padding:13px 26px;border-radius:11px;border:1px solid var(--charcoal-line);
+    background:var(--charcoal-850);color:var(--stone-400);cursor:pointer;
+    transition:background .2s,color .2s,border-color .2s;
+  }
+  .tab-btn.active{
+    background:var(--orange-500);color:var(--charcoal-950);border-color:var(--orange-500);
+  }
+  .menu-grid{
+    display:grid;grid-template-columns:repeat(2,1fr);gap:22px;
+  }
+  .menu-panel{display:none;}
+  .menu-panel.active{display:block;}
+
+  .token{
+    background:var(--charcoal-850);
+    border:1px solid var(--charcoal-line);
+    border-radius:16px;
+    overflow:hidden;
+    position:relative;
+    display:flex;
+    min-height:150px;
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+  }
+  .token:hover{transform:translateY(-4px);border-color:var(--orange-500);box-shadow:0 16px 34px rgba(0,0,0,0.4);}
+  .token-photo{width:38%;flex-shrink:0;position:relative;overflow:hidden;}
+  .token-photo img{width:100%;height:100%;object-fit:cover;transition:transform .5s ease;}
+  .token:hover .token-photo img{transform:scale(1.08);}
+  .token-num{
+    position:absolute;top:8px;left:8px;
+    font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;
+    background:rgba(21,17,13,0.75);color:var(--gold-300);
+    padding:3px 8px;border-radius:999px;letter-spacing:0.05em;
+  }
+  .token-body{padding:18px 18px 16px;flex:1;display:flex;flex-direction:column;justify-content:center;position:relative;}
+  .token-body::before{
+    content:"";position:absolute;left:0;top:14px;bottom:14px;width:1px;
+    background:repeating-linear-gradient(180deg,var(--charcoal-line) 0 6px, transparent 6px 12px);
+  }
+  .token-name{font-family:'Anton',sans-serif;font-size:19px;color:var(--cream-100);text-transform:uppercase;line-height:1.15;}
+  .token-desc{font-size:13.5px;color:var(--stone-400);margin-top:6px;line-height:1.5;}
+  .token-foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px;}
+  .token-price{font-family:'JetBrains Mono',monospace;font-weight:700;color:var(--orange-400);font-size:16px;}
+  .token-add{
+    width:32px;height:32px;border-radius:9px;background:var(--charcoal-800);
+    border:1px solid var(--charcoal-line);display:flex;align-items:center;justify-content:center;
+    color:var(--cream-100);font-size:16px;flex-shrink:0;
+  }
+  .token.no-photo .token-body{padding-left:26px;}
+
+  /* ---------- STORY STRIP ---------- */
+  .story{padding:78px 0;}
+  .story-grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center;}
+  .story-photo{border-radius:18px;overflow:hidden;border:1px solid var(--charcoal-line);aspect-ratio:5/4;}
+  .story-photo img{width:100%;height:100%;object-fit:cover;}
+  .story-copy p{color:var(--stone-400);font-size:16px;line-height:1.7;margin-top:14px;}
+  .story-copy p b{color:var(--cream-200);}
+  .stat-row{display:flex;gap:34px;margin-top:30px;flex-wrap:wrap;}
+  .stat-row div strong{display:block;font-family:'Anton',sans-serif;font-size:30px;color:var(--orange-400);}
+  .stat-row div span{font-family:'JetBrains Mono',monospace;font-size:11.5px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.08em;}
+
+  /* ---------- REVIEWS ---------- */
+  .reviews{background:var(--charcoal-900);border-top:1px solid var(--charcoal-line);border-bottom:1px solid var(--charcoal-line);}
+  .review-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;}
+  .review-card{
+    background:var(--charcoal-850);border:1px solid var(--charcoal-line);border-radius:16px;
+    padding:24px;display:flex;flex-direction:column;gap:14px;
+  }
+  .review-stars{display:flex;gap:3px;color:var(--gold-300);}
+  .review-stars svg{width:16px;height:16px;}
+  .review-quote{font-size:14.5px;line-height:1.6;color:var(--cream-200);}
+  .review-foot{display:flex;align-items:center;gap:10px;margin-top:auto;padding-top:6px;border-top:1px solid var(--charcoal-line);}
+  .review-avatar{
+    width:34px;height:34px;border-radius:50%;flex-shrink:0;
+    background:linear-gradient(155deg,var(--orange-500),var(--chili-600));
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Anton',sans-serif;color:var(--cream-100);font-size:14px;
+  }
+  .review-name{font-size:13.5px;font-weight:700;color:var(--cream-100);}
+  .review-tag{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--stone-500);text-transform:uppercase;letter-spacing:0.05em;}
+  .review-summary{display:flex;align-items:center;gap:18px;margin-bottom:32px;flex-wrap:wrap;}
+  .review-score{
+    display:flex;align-items:baseline;gap:8px;
+    font-family:'Anton',sans-serif;color:var(--cream-100);
+  }
+  .review-score strong{font-size:44px;color:var(--gold-300);}
+  .review-score span{font-family:'Work Sans',sans-serif;font-size:13px;color:var(--stone-400);text-transform:none;}
+  .review-google-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--stone-400);
+    border:1px solid var(--charcoal-line);padding:6px 12px;border-radius:999px;
+  }
+
+  /* ---------- LOCATION / CTA ---------- */
+  .locate{
+    background:linear-gradient(155deg,var(--charcoal-900),var(--charcoal-950));
+    border-top:1px solid var(--charcoal-line);
+  }
+  .locate-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;}
+  .info-card{
+    background:var(--charcoal-850);border:1px solid var(--charcoal-line);border-radius:18px;padding:30px;
+  }
+  .info-row{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--charcoal-line);}
+  .info-row:last-child{border-bottom:none;}
+  .info-ico{
+    width:38px;height:38px;border-radius:10px;background:var(--charcoal-800);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--orange-400);
+  }
+  .info-row h4{font-size:14px;text-transform:uppercase;letter-spacing:0.05em;color:var(--stone-400);font-family:'Work Sans';font-weight:700;margin-bottom:3px;}
+  .info-row p{font-size:15px;color:var(--cream-200);}
+  .cta-panel{
+    background:radial-gradient(ellipse at top left, rgba(232,114,31,0.22), transparent 60%), var(--charcoal-850);
+    border:1px solid var(--charcoal-line);border-radius:18px;padding:36px;
+    display:flex;flex-direction:column;justify-content:center;
+  }
+  .cta-panel h3{font-size:30px;color:var(--cream-100);line-height:1.1;}
+  .cta-panel p{color:var(--stone-400);margin:14px 0 26px;font-size:15px;line-height:1.6;}
+
+  .map-embed{
+    border-radius:18px;overflow:hidden;border:1px solid var(--charcoal-line);
+    min-height:320px;filter:grayscale(0.25) contrast(1.05);
+  }
+  .map-directions{
+    display:block;text-align:center;margin-top:18px;padding:12px 18px;font-size:13.5px;
+  }
+  .delivery-panel{
+    margin-top:28px;
+    background:var(--charcoal-850);border:1px solid var(--charcoal-line);border-radius:18px;
+    padding:30px;
+  }
+  .delivery-head h3{font-family:'Anton',sans-serif;font-size:22px;text-transform:uppercase;color:var(--cream-100);}
+  .delivery-head p{font-size:14px;color:var(--stone-400);margin-top:6px;}
+  .area-pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .area-pill{
+    font-family:'JetBrains Mono',monospace;font-size:12.5px;color:var(--cream-200);
+    background:var(--charcoal-800);border:1px solid var(--charcoal-line);
+    padding:8px 15px;border-radius:999px;
+  }
+  .delivery-note{
+    display:flex;align-items:flex-start;gap:8px;
+    font-size:12.5px;color:var(--stone-500);margin-top:18px;line-height:1.6;
+  }
+  .delivery-note .dot{
+    width:7px;height:7px;border-radius:50%;background:var(--orange-500);flex-shrink:0;margin-top:5px;
+  }
+  .locate .cta-panel{margin-top:28px;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:36px 0;border-top:1px solid var(--charcoal-line);}
+  .foot-grid{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;}
+  .foot-grid p{font-size:13px;color:var(--stone-500);}
+  .foot-links{display:flex;gap:20px;}
+  .foot-links a{font-size:13px;color:var(--stone-400);}
+  .foot-links a:hover{color:var(--orange-400);}
+
+  /* ---------- MOBILE ---------- */
+  @media (max-width:920px){
+    nav.links{position:fixed;top:69px;left:0;right:0;background:var(--charcoal-900);
+      flex-direction:column;padding:18px 24px;gap:0;border-bottom:1px solid var(--charcoal-line);
+      transform:translateY(-130%);transition:transform .25s ease;}
+    nav.links.open{transform:translateY(0);}
+    nav.links a{width:100%;padding:13px 0;border-bottom:1px solid var(--charcoal-line);}
+    .nav-cta{margin-top:8px;justify-content:center;}
+    .nav-toggle{display:block;}
+    .hero-grid{grid-template-columns:1fr;}
+    .hero-visual{order:-1;max-width:420px;margin:0 auto;}
+    .menu-grid{grid-template-columns:1fr;}
+    .story-grid{grid-template-columns:1fr;}
+    .story-photo{order:-1;}
+    .locate-grid{grid-template-columns:1fr;}
+    .review-grid{grid-template-columns:1fr;}
+    .stat-row{gap:24px;}
+  }
+  @media (max-width:520px){
+    .token{flex-direction:column;min-height:auto;}
+    .token-photo{width:100%;height:150px;}
+    .token-body::before{display:none;}
+    .hero-ctas{flex-direction:column;align-items:stretch;}
+    .btn-wa,.btn-ghost{justify-content:center;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav">
+    <div class="brand">
+      <div class="brand-mark">B</div>
+      <div class="brand-name">Bhook<span> Stop</span></div>
+    </div>
+    <nav class="links" id="navLinks">
+      <a href="#menu">Menu</a>
+      <a href="#story">Story</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#locate">Location</a>
+      <a class="nav-cta" href="https://wa.me/923355310666?text=Assalam-o-Alaikum%2C%20I%27d%20like%20to%20order%20from%20Bhook%20Stop" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.92 0-2.65-1.03-5.14-2.9-7.01A9.86 9.86 0 0 0 12.04 2m0 1.67a8.2 8.2 0 0 1 5.83 2.42 8.19 8.19 0 0 1 2.41 5.82c0 4.55-3.7 8.25-8.25 8.25a8.24 8.24 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.55 3.7-8.25 8.25-8.25M8.53 7.13c-.17 0-.45.06-.68.32-.23.25-.9.87-.9 2.13 0 1.25.92 2.46 1.05 2.63.13.17 1.8 2.88 4.45 3.93 2.2.87 2.65.7 3.13.65.48-.04 1.53-.62 1.75-1.22.22-.6.22-1.11.15-1.22-.06-.1-.23-.16-.48-.29-.25-.13-1.53-.75-1.77-.84-.24-.09-.4-.13-.58.13-.17.25-.66.84-.81 1.01-.15.17-.3.19-.55.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.25-1.5-1.4-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.3.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.58-1.44-.81-1.96-.21-.5-.43-.44-.58-.45-.15-.01-.32-.01-.5-.01Z"/></svg>
+        WhatsApp Order
+      </a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu">&#9776;</button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <div class="eyebrow">Shorkot, Punjab &nbsp;·&nbsp; Open Daily 11AM – 1AM</div>
+      <h1>Bhook<br>Stop <span class="stop">Right</span> Here.</h1>
+      <p class="hero-sub">Where Shorkot pulls over for <b>crunchy fast food</b> and <b>garma garam desi karahi</b> — cooked fresh, served fast, and just a WhatsApp message away.</p>
+      <div class="hero-ctas">
+        <a class="btn-wa" href="https://wa.me/923355310666?text=Assalam-o-Alaikum%2C%20I%27d%20like%20to%20order%20from%20Bhook%20Stop" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.92 0-2.65-1.03-5.14-2.9-7.01A9.86 9.86 0 0 0 12.04 2m0 1.67a8.2 8.2 0 0 1 5.83 2.42 8.19 8.19 0 0 1 2.41 5.82c0 4.55-3.7 8.25-8.25 8.25a8.24 8.24 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.55 3.7-8.25 8.25-8.25M8.53 7.13c-.17 0-.45.06-.68.32-.23.25-.9.87-.9 2.13 0 1.25.92 2.46 1.05 2.63.13.17 1.8 2.88 4.45 3.93 2.2.87 2.65.7 3.13.65.48-.04 1.53-.62 1.75-1.22.22-.6.22-1.11.15-1.22-.06-.1-.23-.16-.48-.29-.25-.13-1.53-.75-1.77-.84-.24-.09-.4-.13-.58.13-.17.25-.66.84-.81 1.01-.15.17-.3.19-.55.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.25-1.5-1.4-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.3.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.58-1.44-.81-1.96-.21-.5-.43-.44-.58-.45-.15-.01-.32-.01-.5-.01Z"/></svg>
+          Order via WhatsApp
+        </a>
+        <a class="btn-ghost" href="#menu">See Full Menu</a>
+      </div>
+      <div class="hero-meta">
+        <div><strong>15–20 min</strong>average order time</div>
+        <div><strong>2 menus</strong>fast food + desi food</div>
+        <div><strong>Rs 350+</strong>free delivery in Shorkot</div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-photo">
+        <img src="https://images.unsplash.com/photo-1662452883375-9226ea22c765?fm=jpg&q=70&w=1400&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Burger and fries at Bhook Stop">
+        <div class="steam" style="left:35%;animation-delay:0s;"></div>
+        <div class="steam" style="left:52%;animation-delay:1.3s;"></div>
+        <div class="steam" style="left:68%;animation-delay:2.5s;"></div>
+        <div class="price-tag"><span class="dot"></span><span>TOKEN #01 — TONIGHT'S PICK</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-wrap">
+  <div class="ticker" id="tickerRow">
+    <span>Zinger Burgers</span><span>Loaded Fries</span><span>Chicken Karahi</span><span>Mutton Karahi</span><span>Broast</span><span>Beef Burgers</span><span>Garma Garam Naan</span>
+    <span>Zinger Burgers</span><span>Loaded Fries</span><span>Chicken Karahi</span><span>Mutton Karahi</span><span>Broast</span><span>Beef Burgers</span><span>Garma Garam Naan</span>
+  </div>
+</div>
+
+<section class="menu" id="menu">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-eyebrow">Take a token, place your order</span>
+      <h2>The Menu</h2>
+      <p>Two counters, one stop. Swipe between our fast food line and our desi karahi counter — every token below ships hot, fresh, and ready for pickup or WhatsApp delivery.</p>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" data-tab="fast">Fast Food</button>
+      <button class="tab-btn" data-tab="desi">Desi Food</button>
+    </div>
+
+    <div class="menu-panel active" id="panel-fast">
+      <div class="menu-grid">
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 01</span>
+            <img src="https://images.unsplash.com/photo-1662452883375-9226ea22c765?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop beef cheese burger">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Beef Cheese Burger</div>
+            <div class="token-desc">Grilled beef patty, melted cheese, house sauce, sesame bun.</div>
+            <div class="token-foot"><span class="token-price">Rs 450</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 02</span>
+            <img src="https://images.unsplash.com/photo-1662452883375-9226ea22c765?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop zinger burger">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Zinger Burger</div>
+            <div class="token-desc">Crispy fried chicken fillet, mayo, lettuce, toasted bun.</div>
+            <div class="token-foot"><span class="token-price">Rs 400</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 03</span>
+            <img src="https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop loaded fries">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Loaded Fries</div>
+            <div class="token-desc">Golden fries topped with cheese sauce, jalapeños and spice mix.</div>
+            <div class="token-foot"><span class="token-price">Rs 300</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 04</span>
+            <img src="https://images.unsplash.com/photo-1567620832903-9fc6debc209f?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop broast">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Crispy Broast (2pc)</div>
+            <div class="token-desc">Marinated, double-fried chicken pieces with garlic mayo dip.</div>
+            <div class="token-foot"><span class="token-price">Rs 380</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 07</span>
+            <img src="https://images.unsplash.com/photo-1668891296479-c88fd8a68509?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop regular fries">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Regular Fries</div>
+            <div class="token-desc">Crispy salted fries, served hot with ketchup on the side.</div>
+            <div class="token-foot"><span class="token-price">Rs 200</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 08</span>
+            <img src="https://images.unsplash.com/photo-1540713434306-58505cf1b6fc?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop club sandwich">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Club Sandwich</div>
+            <div class="token-desc">Triple-layer chicken, egg, cheese and fresh veg on toast.</div>
+            <div class="token-foot"><span class="token-price">Rs 350</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="menu-panel" id="panel-desi">
+      <div class="menu-grid">
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 05</span>
+            <img src="https://images.unsplash.com/photo-1725013936271-f2aca0da266f?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop chicken karahi">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Chicken Karahi</div>
+            <div class="token-desc">Slow-cooked in a traditional karahi with tomato, ginger, green chili.</div>
+            <div class="token-foot"><span class="token-price">Rs 1400 / kg</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 06</span>
+            <img src="https://images.unsplash.com/photo-1725013936271-f2aca0da266f?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop mutton karahi">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Mutton Karahi</div>
+            <div class="token-desc">Rich, slow-braised mutton karahi finished with fresh coriander.</div>
+            <div class="token-foot"><span class="token-price">Rs 2600 / kg</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 09</span>
+            <img src="https://images.unsplash.com/photo-1742599361539-f096753d1100?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop chicken handi">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Chicken Handi</div>
+            <div class="token-desc">Creamy, mildly spiced chicken handi cooked with desi ghee.</div>
+            <div class="token-foot"><span class="token-price">Rs 1300 / kg</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 10</span>
+            <img src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop seekh kabab">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Seekh Kabab (4pc)</div>
+            <div class="token-desc">Charcoal-grilled minced beef skewers with mint chutney.</div>
+            <div class="token-foot"><span class="token-price">Rs 450</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 11</span>
+            <img src="https://images.unsplash.com/photo-1611107415406-1c12f8cda424?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop tandoori naan">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Tandoori Naan</div>
+            <div class="token-desc">Fresh-baked naan, straight out of the tandoor.</div>
+            <div class="token-foot"><span class="token-price">Rs 40</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+
+        <div class="token">
+          <div class="token-photo">
+            <span class="token-num">TOKEN 12</span>
+            <img src="https://images.unsplash.com/photo-1762631383612-ee9366e58431?fm=jpg&q=70&w=800&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Bhook Stop chicken karahi roll">
+          </div>
+          <div class="token-body">
+            <div class="token-name">Chicken Karahi Roll</div>
+            <div class="token-desc">Karahi masala chicken wrapped in warm paratha with chutney.</div>
+            <div class="token-foot"><span class="token-price">Rs 320</span><span class="token-add">+</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="story" id="story">
+  <div class="wrap story-grid">
+    <div class="story-photo">
+      <img src="https://images.unsplash.com/photo-1630384060421-cb20d0e0649d?fm=jpg&q=70&w=1200&auto=format&fit=crop&ixlib=rb-4.1.0" alt="Fresh fries at Bhook Stop">
+    </div>
+    <div class="story-copy">
+      <span class="sec-eyebrow">Our Story</span>
+      <h2>Built for Shorkot's hunger, in every direction.</h2>
+      <p>Bhook Stop started with one idea: a family driving through Shorkot shouldn't have to choose between a quick burger and a proper desi meal. So we built one counter for both — <b>same kitchen, same speed, same low prices.</b></p>
+      <p>Every karahi is cooked to order, every patty is grilled fresh, and every token gets to your table — or your door — while it's still hot.</p>
+      <div class="stat-row">
+        <div><strong>2</strong><span>Live Menus</span></div>
+        <div><strong>12+</strong><span>Signature Items</span></div>
+        <div><strong>1AM</strong><span>Last Order</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="reviews" id="reviews">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-eyebrow">What Shorkot is saying</span>
+      <h2>Reviews From Regulars</h2>
+    </div>
+    <div class="review-summary">
+      <div class="review-score"><strong>4.7</strong><span>out of 5 · based on Google reviews</span></div>
+      <div class="review-google-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.99.66-2.25 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09A6.6 6.6 0 0 1 5.5 12c0-.73.13-1.43.34-2.09V7.07H2.18A11 11 0 0 0 1 12c0 1.77.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+        Google Reviews
+      </div>
+    </div>
+    <div class="review-grid">
+      <div class="review-card">
+        <div class="review-stars">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+        </div>
+        <p class="review-quote">Chicken karahi tastes just like home-cooked — and the zinger burger is honestly better than the bigger chains here. WhatsApp order was ready in 20 minutes.</p>
+        <div class="review-foot">
+          <div class="review-avatar">A</div>
+          <div><div class="review-name">Ahmad R.</div><div class="review-tag">Verified Google Review</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+        </div>
+        <p class="review-quote">We order the mutton karahi and naan every Friday for the family. Consistent quality, generous portions, and the delivery guy always calls ahead.</p>
+        <div class="review-foot">
+          <div class="review-avatar">S</div>
+          <div><div class="review-name">Sana K.</div><div class="review-tag">Verified Google Review</div></div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <div class="review-stars">
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+          <svg fill="currentColor" viewBox="0 0 20 20" opacity="0.3"><path d="M10 1l2.6 5.9 6.4.6-4.8 4.3 1.4 6.2L10 14.9 4.4 18l1.4-6.2L1 7.5l6.4-.6z"/></svg>
+        </div>
+        <p class="review-quote">Loaded fries are a proper snack, not just fries with a sprinkle of stuff. Only wish they opened a bit earlier, but worth the wait either way.</p>
+        <div class="review-foot">
+          <div class="review-avatar">U</div>
+          <div><div class="review-name">Usman T.</div><div class="review-tag">Verified Google Review</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="locate" id="locate">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="sec-eyebrow">Find the stop</span>
+      <h2>Shorkot's Corner for Bhook</h2>
+    </div>
+    <div class="locate-grid">
+      <div class="map-embed">
+        <iframe src="https://www.google.com/maps?q=Shorkot,+Punjab,+Pakistan&output=embed" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Bhook Stop location map"></iframe>
+      </div>
+
+      <div class="info-card">
+        <div class="info-row">
+          <div class="info-ico">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div><h4>Address</h4><p>Main Bazaar Road, Shorkot, District Jhang, Punjab, Pakistan</p></div>
+        </div>
+        <div class="info-row">
+          <div class="info-ico">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+          </div>
+          <div><h4>Hours</h4><p>Open daily · 11:00 AM – 1:00 AM</p></div>
+        </div>
+        <div class="info-row">
+          <div class="info-ico">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          </div>
+          <div><h4>Phone / WhatsApp</h4><p>0335 5310666</p></div>
+        </div>
+        <a class="btn-ghost map-directions" href="https://www.google.com/maps?q=Shorkot,+Punjab,+Pakistan" target="_blank" rel="noopener">Get Directions</a>
+      </div>
+    </div>
+
+    <div class="delivery-panel">
+      <div class="delivery-head">
+        <h3>Delivery Areas</h3>
+        <p>We deliver across Shorkot city — free within 3km of Main Bazaar, small fee beyond that.</p>
+      </div>
+      <div class="area-pills">
+        <span class="area-pill">Main Bazaar</span>
+        <span class="area-pill">College Road</span>
+        <span class="area-pill">Railway Station Road</span>
+        <span class="area-pill">Shorkot Cantt</span>
+        <span class="area-pill">Jhang Road</span>
+        <span class="area-pill">Toba Road</span>
+      </div>
+      <div class="delivery-note">
+        <span class="dot"></span> Free delivery on orders above Rs 350 within city limits · Rs 100 delivery fee outside 3km · Outside these areas? Message us on WhatsApp to check.
+      </div>
+    </div>
+
+    <div class="cta-panel">
+      <h3>Hungry right now?</h3>
+      <p>Skip the call — send us your order on WhatsApp and we'll confirm your total, delivery time, and get cooking.</p>
+      <a class="btn-wa" href="https://wa.me/923355310666?text=Assalam-o-Alaikum%2C%20I%27d%20like%20to%20order%20from%20Bhook%20Stop" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.33 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.92 0-2.65-1.03-5.14-2.9-7.01A9.86 9.86 0 0 0 12.04 2m0 1.67a8.2 8.2 0 0 1 5.83 2.42 8.19 8.19 0 0 1 2.41 5.82c0 4.55-3.7 8.25-8.25 8.25a8.24 8.24 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.2 8.2 0 0 1-1.26-4.38c0-4.55 3.7-8.25 8.25-8.25M8.53 7.13c-.17 0-.45.06-.68.32-.23.25-.9.87-.9 2.13 0 1.25.92 2.46 1.05 2.63.13.17 1.8 2.88 4.45 3.93 2.2.87 2.65.7 3.13.65.48-.04 1.53-.62 1.75-1.22.22-.6.22-1.11.15-1.22-.06-.1-.23-.16-.48-.29-.25-.13-1.53-.75-1.77-.84-.24-.09-.4-.13-.58.13-.17.25-.66.84-.81 1.01-.15.17-.3.19-.55.06-.25-.13-1.06-.39-2.03-1.25-.75-.67-1.25-1.5-1.4-1.75-.14-.25-.02-.39.11-.51.11-.11.25-.3.37-.44.12-.15.16-.25.25-.42.08-.17.04-.31-.02-.44-.06-.13-.58-1.44-.81-1.96-.21-.5-.43-.44-.58-.45-.15-.01-.32-.01-.5-.01Z"/></svg>
+        Order via WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap foot-grid">
+    <p>&copy; 2026 Bhook Stop, Shorkot. All rights reserved.</p>
+    <div class="foot-links">
+      <a href="#menu">Menu</a>
+      <a href="#story">Story</a>
+      <a href="#locate">Location</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // menu tabs
+  const tabs = document.querySelectorAll('.tab-btn');
+  const panels = { fast: document.getElementById('panel-fast'), desi: document.getElementById('panel-desi') };
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      Object.values(panels).forEach(p => p.classList.remove('active'));
+      panels[tab.dataset.tab].classList.add('active');
+    });
+  });
+</script>
+</body>
+</html>
